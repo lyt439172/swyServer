@@ -1,51 +1,51 @@
-const { User } = require('../models/index');
+const { SwyData } = require('../models/index');
 const RetJson  = require('../lib/retjson');
-const md5 = require('md5');
+// const md5 = require('md5');
 module.exports = {
     
     async store(ctx) {
-        if( await  User.getUserByNick(ctx.request.body.nick) ||  await  User.getUserByEmail(ctx.request.body.email) ){
-            ctx.body = new RetJson(403, '账户已经存在')
+        if( await  SwyData.getSwyDataById(ctx.request.body.id) ){
+            ctx.body = new RetJson(403, '故障数据已经存在')
             return;
         }
-        const user = await User.createUser({
-            nick: ctx.request.body.nick,
-            email: ctx.request.body.email,
-            password: md5(ctx.request.body.password),
-            verify_token: ctx.request.body.verify_token,
+        const swyData = await SwyData.createSwyData({
+            represent: ctx.request.body.represent,
+            representExtra: ctx.request.body.representExtra,
+            reason: ctx.request.body.reason,
+            position: ctx.request.body.position,
             status: ctx.request.body.status,
-            type: ctx.request.body.type,
-            cover: ctx.request.body.cover,
+            solution: ctx.request.body.solution,
+            // cover: ctx.request.body.cover,
         })
-        ctx.body = new RetJson(0 ,'success', user)
+        ctx.body = new RetJson(0 ,'success', swyData)
     },
 
     async destory(ctx) {
-        const user = await User.removeUserById(ctx.params.id)
-        ctx.body = new RetJson(0, 'success', user)
+        const swyData = await SwyData.removeSwyDataById(ctx.params.id)
+        ctx.body = new RetJson(0, 'success', swyData)
     },
 
     async update(ctx) {
-        const user = await User.updateUserById(ctx.params.id,{
-            nick: ctx.request.body.nick,
-            email: ctx.request.body.email,
-            password: ctx.request.body.password,
-            verify_token: ctx.request.body.verify_token,
+        const swyData = await SwyData.updateSwyDataById(ctx.params.id,{
+            represent: ctx.request.body.represent,
+            representExtra: ctx.request.body.representExtra,
+            reason: ctx.request.body.reason,
+            position: ctx.request.body.position,
             status: ctx.request.body.status,
-            type: ctx.request.body.type,
-            cover: ctx.request.body.cover,
+            solution: ctx.request.body.solution,
+            // cover: ctx.request.body.cover,
         })
-        ctx.body = new RetJson(0, 'success', user)
+        ctx.body = new RetJson(0, 'success', swyData)
     },
 
     async  index(ctx){
-        const user = await User.getUser(ctx.query.pg)
-        ctx.body = new RetJson(0, 'success', user)
+        const swyData = await SwyData.getSwyData(ctx.query.pg)
+        ctx.body = new RetJson(0, 'success', swyData)
     },
 
     async  show(ctx){
-        const user = await User.getUserById(ctx.params.id)
-        ctx.body = new RetJson(0, 'success', user)
+        const swyData = await SwyData.getSwyDataById(ctx.params.id)
+        ctx.body = new RetJson(0, 'success', swyData)
     },
 
 }

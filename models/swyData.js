@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         static async createSwyData(obj) {
             return new Promise(async (res,rej)=> {
                 try{
-                    const user = await this.create(obj)
-                    if(user.id){
-                        res(user.toJSON())
+                    const swyData = await this.create(obj)
+                    if(swyData.id){
+                        res(swyData.toJSON())
                     }else{
                         rej('创建失败')
                     }
@@ -25,9 +25,9 @@ module.exports = (sequelize, DataTypes) => {
             const ids = id.split(',')
             return new Promise(async (res,rej) => {
                 try{
-                    const user = await this.destroy({ where: { id:{ [Op.in]:ids } } });
-                    if(user){
-                        res(user)
+                    const swyData = await this.destroy({ where: { id:{ [Op.in]:ids } } });
+                    if(swyData){
+                        res(swyData)
                     }else{
                         rej('删除失败')
                     }
@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
             static async updateSwyDataById(id,obj) {
             return new Promise(async (res,rej) => {
                 try{
-                    const user = await this.update(obj, { where:{ id }});
-                    if(user){
-                        res(user)
+                    const swyData = await this.update(obj, { where:{ id }});
+                    if(swyData){
+                        res(swyData)
                     }else{
                         rej('更新失败')
                     }
@@ -58,9 +58,9 @@ module.exports = (sequelize, DataTypes) => {
         static async getSwyData(pg=1){
             return new Promise(async (res,rej)=> {
                 try{
-                    const user = await makePageData(pg, SwyData)
-                    if(user.allCount > 0){
-                        res(user)
+                    const swyData = await makePageData(pg, SwyData)
+                    if(swyData.allCount > 0){
+                        res(swyData)
                     }else{
                         res(undefined)
                     }
@@ -74,9 +74,9 @@ module.exports = (sequelize, DataTypes) => {
         static async getSwyDataById(id, pg=1) {
             return new Promise(async (res,rej)=> {
                 try{
-                    const user = await makePageData(pg, SwyData,{ id })
-                    if(user.allCount > 0){
-                        res(user)
+                    const swyData = await makePageData(pg, SwyData,{ id })
+                    if(swyData.allCount > 0){
+                        res(swyData)
                     }else{
                         res(undefined)
                     }
@@ -87,12 +87,12 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
 
-        static async getSwyDataByNick(nick, pg=1) {
+        static async getSwyDataByRepresent(represent, pg=1) {
             return new Promise(async (res,rej)=> {
                 try{
-                    const user = await makePageData(pg, SwyData,{ nick })
-                    if(user.allCount > 0){
-                        res(user)
+                    const swyData = await makePageData(pg, SwyData,{ represent })
+                    if(swyData.allCount > 0){
+                        res(swyData)
                     }else{
                         res(undefined)
                     }
@@ -100,38 +100,6 @@ module.exports = (sequelize, DataTypes) => {
                     console.log('error',error)
                 }
                
-            })
-        }
-
-        static async getSwyDataByEmail(email, pg=1) {
-            return new Promise(async (res,rej)=> {
-                try{
-                    const user = await makePageData(pg, SwyData,{ email })
-                    if(user.allCount > 0){
-                        res(user)
-                    }else{
-                        res(undefined)
-                    }
-                }catch(error){
-                    console.log('error',error)
-                }
-               
-            })
-        }
-
-        static async getSwyDataByEmailAndPassword(email,password, pg=1) {
-            return new Promise(async (res,rej)=> {
-                try{
-                    const user = await makePageData(pg, SwyData,{ email,password })
-                    if(user.allCount > 0){
-                        res(user)
-                    }else{
-                        res(undefined)
-                    }
-                }catch(error){
-                    console.log('error',error)
-                }
-                
             })
         }
 
@@ -139,13 +107,12 @@ module.exports = (sequelize, DataTypes) => {
     
     SwyData.init(
     {
-        nick:DataTypes.STRING,
-        email:DataTypes.STRING,
-        password:DataTypes.STRING,
-        verify_token:DataTypes.STRING,
+        represent:DataTypes.INTEGER,
+        representExtra:DataTypes.STRING,
+        reason:DataTypes.STRING,
+        position:DataTypes.STRING,
         status:DataTypes.INTEGER,
-        type:DataTypes.INTEGER,
-        cover:DataTypes.STRING,
+        solution:DataTypes.STRING,
     }, {
         sequelize,
         modelName: "SwyData",

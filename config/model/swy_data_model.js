@@ -1,11 +1,11 @@
 
 module.exports = {
-    modelName:'swy_data', // 数据模型
+    modelName:'swyData', // 数据模型
     fields: {
-        id: {
-            type: "Integer",
-            isUnique: true
-        },
+        // id: {
+        //     type: "Integer",
+        //     isUnique: true
+        // },
         represent: { // 故障现象
             type: "Integer" // 存储枚举类型
         },
