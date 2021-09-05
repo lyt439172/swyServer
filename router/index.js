@@ -11,11 +11,11 @@ router.post('/upload', appController.updateFile);
 
 
 // swyData
-router.post('/swyData', swyDataController.store);
-router.get('/swyData', swyDataController.index);
-router.get('/swyData/:id', swyDataController.show);
-router.delete('/swyData/:id', swyDataController.destory); // 传入要删除的id 如 1,2,3,4,5
-router.put('/swyData/:id', swyDataController.update);
+router.post('/swyData', swyDataController.store); // 添加1条数据
+router.get('/findData', swyDataController.index); // 根据条件获取列表数据
+router.get('/swyData/:id', swyDataController.show); // 根据id获取1条数据
+router.delete('/swyData/:id', swyDataController.destory); // 传入要删除的id
+router.post('/swyData/:id', swyDataController.update); // 根据id更新一条数据
 
 module.exports = {
     router

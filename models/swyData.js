@@ -55,21 +55,21 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
 
-        static async getSwyData(pg=1){
-            return new Promise(async (res,rej)=> {
-                try{
-                    const swyData = await makePageData(pg, SwyData)
-                    if(swyData.allCount > 0){
-                        res(swyData)
-                    }else{
-                        res(undefined)
-                    }
-                }catch(error){
-                    console.log('error',error)
-                }
+        // static async getSwyData(pg = 1){
+        //     return new Promise(async (res,rej)=> {
+        //         try{
+        //             const swyData = await makePageData(pg, SwyData)
+        //             if(swyData.allCount > 0){
+        //                 res(swyData)
+        //             }else{
+        //                 res(undefined)
+        //             }
+        //         }catch(error){
+        //             console.log('error',error)
+        //         }
                
-            })
-        }
+        //     })
+        // }
 
         static async getSwyDataById(id, pg=1) {
             return new Promise(async (res,rej)=> {
@@ -87,10 +87,11 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
 
-        static async getSwyDataByRepresent(represent, pg=1) {
+        static async getSwyDataBySearch(pg, seachData = '') {
+            const data = seachData ? JSON.parse(seachData) : {}
             return new Promise(async (res,rej)=> {
                 try{
-                    const swyData = await makePageData(pg, SwyData,{ represent })
+                    const swyData = await makePageData(pg, SwyData, data)
                     if(swyData.allCount > 0){
                         res(swyData)
                     }else{

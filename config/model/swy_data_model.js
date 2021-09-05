@@ -1,3 +1,4 @@
+const { Sequelize } = require("../../models");
 
 module.exports = {
     modelName:'swyData', // 数据模型
@@ -13,7 +14,7 @@ module.exports = {
             type: "String"
         },
         reason:{ // 故障原因
-            type:"String"
+            type: Sequelize.TEXT
         },
         position: { // 故障位置
             type: "String"
@@ -42,6 +43,6 @@ module.exports = {
         }
     },
     other: {
-        uniqueDesc:'故障已经存在'
+        uniqueDesc: '故障已经存在'
     }
 }
